@@ -26,16 +26,30 @@ namespace ExamenTecnicoDevelop.Controllers
             restRequest.AddHeader("Authorization", "Basic Y2hyaXN0b3BoZXJAZGV2ZWxvcC5teDpUZXN0aW5nRGV2ZWxvcDEyM0AuLi4=");
             RestResponse restResponse = await restClient.ExecuteAsync(restRequest);
 
+            /* La respues devuelve un texto igual al siguiente: 
+             * 
+             * 
+             * 
+             "{\r\n    \"authType\": \"registered\",\r\n    \"companyName\": null,\r\n   
+             \"creationDate\": \"2021-07-28T21:44:07+00:00\",\r\n    \"customerId\":
+            
+              Por lo tanto, para poder convertirlo al formato JSON plano, deserializo la respuesta y la convierto a string 
+              (linea 49)
+             */
+
+
             if (restResponse == null) { return new Customer(); }
             if (restResponse.Content == null)
             {
                 return new Customer();
             }
 
-
+          
+            //Aqui es donde se deserializa y se convierte a string
             string? customerResponseAux = JsonConvert.DeserializeObject(restResponse.Content).ToString();
 
             if (customerResponseAux == null) { return new Customer(); }
+            //Teniendo el json en un formato correcto, lo deserializo para que sea compatible con mi modelo
             Customer? customerResponse = JsonConvert.DeserializeObject<Customer>(customerResponseAux);
 
 
