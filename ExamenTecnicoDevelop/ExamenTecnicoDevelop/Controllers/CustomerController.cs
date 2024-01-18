@@ -87,12 +87,19 @@ namespace ExamenTecnicoDevelop.Controllers
             if(customerResponse == null) { return new List<Address>(); }
             if(customerResponse.Addresses == null) { return new List<Address>(); }
             List<Address> addressResultAux = customerResponse.Addresses.ToList();
-            List<Address> addressResult = addressResultAux.OrderBy(address => address.Address1).ThenByDescending(address=>address.CreationDate).ToList();
+
+            //Ordenamiento usando linQ
+            IEnumerable<Address> addressResult = from address in addressResultAux
+                                                 orderby address.Address1 descending
+                                                 orderby address.CreationDate descending
+                                                 select address;
+            //Ordenamiento haciendo uso del metodo OrderBy de las listas
+            //List<Address> addressResult = addressResultAux.OrderBy(address => address.Address1).ThenByDescending(address=>address.CreationDate).ToList();
             if (addressResult == null)
             {
                 return new List<Address>();
             }
-            return addressResult;
+            return addressResult.ToList<Address>();
         }
 
         [HttpGet]
@@ -123,12 +130,18 @@ namespace ExamenTecnicoDevelop.Controllers
             if (customerResponse == null) { return new List<Address>(); }
             if (customerResponse.Addresses == null) { return new List<Address>(); }
             List<Address> addressResultAux = customerResponse.Addresses.ToList();
-            List<Address> addressResult = addressResultAux.FindAll(address => address.Preffered==true).ToList();
+
+            //Ordenamiento usando linQ
+            IEnumerable<Address> addressResult = from address in addressResultAux
+                                                 where address.Preffered==true
+                                                 select address;
+            //Ordenamiento haciendo uso del metodo OrderBy de las listas
+            //List<Address> addressResult = addressResultAux.FindAll(address => address.Preffered==true).ToList();
             if (addressResult == null)
             {
                 return new List<Address>();
             }
-            return addressResult;
+            return addressResult.ToList<Address>();
         }
 
         [HttpGet]
@@ -159,12 +172,18 @@ namespace ExamenTecnicoDevelop.Controllers
             if (customerResponse == null) { return new List<Address>(); }
             if (customerResponse.Addresses == null) { return new List<Address>(); }
             List<Address> addressResultAux = customerResponse.Addresses.ToList();
-            List<Address> addressResult = addressResultAux.FindAll(address => address.PostalCode == codigoPostal).ToList();
+
+            //Ordenamiento usando linQ
+            IEnumerable<Address> addressResult = from address in addressResultAux
+                                                 where address.PostalCode == codigoPostal
+                                                 select address;
+            //Ordenamiento haciendo uso del metodo OrderBy de las listas
+            //List<Address> addressResult = addressResultAux.FindAll(address => address.PostalCode == codigoPostal).ToList();
             if (addressResult == null)
             {
                 return new List<Address>();
             }
-            return addressResult;
+            return addressResult.ToList<Address>();
         }
 
     }
