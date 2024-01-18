@@ -90,8 +90,7 @@ namespace ExamenTecnicoDevelop.Controllers
 
             //Ordenamiento usando linQ
             IEnumerable<Address> addressResult = from address in addressResultAux
-                                                 orderby address.Address1 descending
-                                                 orderby address.CreationDate descending
+                                                 orderby address.Address1 ascending, address.CreationDate descending
                                                  select address;
             //Ordenamiento haciendo uso del metodo OrderBy de las listas
             //List<Address> addressResult = addressResultAux.OrderBy(address => address.Address1).ThenByDescending(address=>address.CreationDate).ToList();
